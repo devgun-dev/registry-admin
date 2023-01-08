@@ -1,0 +1,61 @@
+# build frontend files
+FROM node:16-alpine as frontend
+
+ARG CI
+
+ADD . /build
+WORKDIR /build/frontend
+
+RUN \
+    if [ -z "$CI" ] ; then \
+    echo "build frontend outside of CI" && yarn && yarn build; \
+    else echo "build frontend in CI" && ls -la build; fi
+
+# build the backend registry-admin
+FROM golang:1.19-alpine as backend
+
+ARG GIT_BRANCH
+ARG GITHUB_SHA
+ARG CI
+
+ENV GOFLAGS="-mod=vendor"
+ENV CGO_ENABLED=1
+
+ADD . /build
+COPY --from=frontend /build/frontend/build  /build/app/web
+
+RUN apk add --no-cache --update git tzdata ca-certificates build-base git
+
+WORKDIR /build
+
+RUN \
+    if [ -z "$CI" ] ; then \
+    echo "runs outside of CI" && version=$(git rev-parse --abbrev-ref HEAD)-$(git log -1 --format=%h)-$(date +%Y%m%dT%H:%M:%S); \
+    else version=${GIT_BRANCH}-${GITHUB_SHA:0:7}-$(date +%Y%m%dT%H:%M:%S); fi && \
+    echo "version=$version" && \
+    GOOS=linux GOARCH=amd64 go build -o registry-admin.linux-amd64 -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=linux GOARCH=386 go build -o registry-admin.linux-386 -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=linux GOARCH=arm go build -o registry-admin.linux-arm -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=linux GOARCH=arm64 go build -o registry-admin.linux-arm64 -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=windows GOARCH=amd64 go build -o registry-admin.windows-amd64.exe -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=darwin GOARCH=amd64 go build -o registry-admin.darwin-amd64 -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=darwin GOARCH=arm64 go build -o registry-admin.darwin-arm64 -ldflags "-X main.version=${version} -s -w" ./app && \
+    GOOS=freebsd GOARCH=amd64 go build -o registry-admin.freebsd-amd64 -ldflags "-X main.version=${version} -s -w" ./app
+
+RUN \
+    apk add --no-cache --update zip && \
+    cp ../LICENSE ./LICENSE && cp ../README.md ./README.md && \
+    tar cvzf registry-admin.linux-amd64.tar.gz egistry-admin.linux-amd64 LICENSE README.md && \
+    tar cvzf registry-admin.linux-386.tar.gz egistry-admin.linux-386 LICENSE README.md && \
+    tar cvzf registry-admin.linux-arm.tar.gz egistry-admin.linux-arm LICENSE README.md && \
+    tar cvzf registry-admin.linux-arm64.tar.gz egistry-admin.linux-arm64 LICENSE README.md && \
+    tar cvzf registry-admin.darwin-amd64.tar.gz egistry-admin.darwin-amd64 LICENSE README.md && \
+    tar cvzf registry-admin.darwin-arm64.tar.gz egistry-admin.darwin-arm64 LICENSE README.md && \
+    tar cvzf registry-admin.freebsd-amd64.tar.gz egistry-admin.freebsd-amd64 LICENSE README.md && \
+    zip registry-admin.windows-amd64.zip egistry-admin.windows-amd64.exe LICENSE README.md
+
+
+FROM alpine
+COPY --from=backend /build/backend/registry-admin.* /artifacts/
+RUN ls -la /artifacts/*
+CMD ["sleep", "100"]
