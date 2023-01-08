@@ -39,7 +39,7 @@ jobs:
           cp -r build/* ../app/web
 
       - name: Install cross-compiler for linux/arm64
-        run: sudo apt-get -y install gcc-aarch64-linux-gnu
+        run: sudo apt-get -y install gcc-aarch64-linux-gnu gcc-arm*
       - name: Create release
         uses: goreleaser/goreleaser-action@v2
         with:
