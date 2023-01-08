@@ -47,6 +47,6 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist --config .goreleaser.yml
+          args: release --rm-dist --config .goreleaser.yml  --snapshot
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
