@@ -3,7 +3,7 @@ builds:
       - CGO_ENABLED=1
     goos:
       - linux
-      - darwin
+      #- darwin
       - windows
       - freebsd
     goarch:
