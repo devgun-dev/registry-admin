@@ -8,9 +8,11 @@ builds:
       - freebsd
     goarch:
       - amd64
-      #- arm
+      - arm
       - arm64
     ignore:
+      - goos: windows
+        goarch: arm
       - goos: freebsd
         goarch: arm
       - goos: freebsd
@@ -19,6 +21,10 @@ builds:
     ldflags: "-s -w -X main.version={{.Tag}}-{{.ShortCommit}}-{{.CommitDate}}"
     overrides:
       - goos: linux
+        goarch: arm
+        env:
+          - CC=arm-linux-gnueabi-gcc
+      - goos: linux
         goarch: arm64
         env:
           - CC=aarch64-linux-gnu-gcc
@@ -26,6 +32,10 @@ builds:
         goarch: amd64
         env:
           - CC=gcc
+      - goos: windows
+        goarch: amd64
+        env:
+          - CC=x86_64-w64-mingw32-gcc
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
     rlcp: true
