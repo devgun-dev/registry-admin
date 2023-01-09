@@ -51,7 +51,7 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist --config .goreleaser.yml  --snapshot
+          args: release --rm-dist --config .goreleaser.yml
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
 
@@ -92,6 +92,6 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist --config .goreleaser-darwin.yml  --snapshot
+          args: release --rm-dist --config .goreleaser-darwin.yml
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}          
