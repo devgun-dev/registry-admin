@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: check for tags
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        run: The tags are ${{ github.event.inputs.tags }} 
+        run: echo ${GITHUB_REF} | cut -d'/' -f3
              
       - name: disable and stop mono-xsp4.service
         run: |
