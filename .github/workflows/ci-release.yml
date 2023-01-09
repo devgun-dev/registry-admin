@@ -42,7 +42,7 @@ jobs:
       - name: Install cross-compiler for linux/arm64
         run: |
           sudo apt-get update
-          sudo apt-get -y install gcc-aarch64-linux-gnu gcc-multilib mingw-w64 gcc-arm*
+          sudo apt-get -y install gcc-aarch64-linux-gnu mingw-w64 gcc-arm*
         
       - name: Create release
         uses: goreleaser/goreleaser-action@v4
