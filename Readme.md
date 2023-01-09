@@ -1,4 +1,3 @@
-
 <div align="center">
   <img src="assets/registry_admin_logo.svg" alt="logo" width="400"/>
 </div>
