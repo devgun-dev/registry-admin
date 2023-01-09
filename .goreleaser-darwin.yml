@@ -13,5 +13,5 @@ archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
     rlcp: true
     files:
-      - LICENSE
-      - README.md
+      - LICENSE.md
+      - Readme.md
