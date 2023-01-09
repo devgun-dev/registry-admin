@@ -82,8 +82,6 @@ jobs:
           yarn build
           cp -r build/* ../app/web
           ls -l ../app/web
-      - name: Install cross-compiler for linux/arm64
-        run: sudo apt-get -y install gcc-aarch64-linux-gnu mingw-w64 gcc-arm*
         
       - name: Create release
         uses: goreleaser/goreleaser-action@v4
