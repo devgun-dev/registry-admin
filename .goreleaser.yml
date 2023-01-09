@@ -45,5 +45,5 @@ archives:
       - goos: windows
         format: zip
     files:
-      - LICENSE
-      - README.md
+      - LICENSE.md
+      - Readme.md
