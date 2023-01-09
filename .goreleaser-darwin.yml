@@ -1,0 +1,17 @@
+builds:
+  - env:
+      - CGO_ENABLED=1
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    dir: app
+    ldflags: "-s -w -X main.version={{.Tag}}-{{.ShortCommit}}-{{.CommitDate}}"
+   
+archives:
+  - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
+    rlcp: true
+    files:
+      - LICENSE
+      - README.md
