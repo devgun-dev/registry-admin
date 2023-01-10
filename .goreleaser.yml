@@ -42,6 +42,7 @@ checksum:
 signs:
   - artifacts: checksum
   - stdin: '{{ .Env.GPG_PASSWORD }}'
+  - id: linux_windows_sign
             
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
