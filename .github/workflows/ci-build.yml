@@ -92,7 +92,7 @@ jobs:
         uses: actions/checkout@v2  
         
       - name: restore JS build artifcats
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: js-build-artifacts
           path: app/web   
@@ -134,7 +134,7 @@ jobs:
         uses: actions/checkout@v2 
         
       - name: restore JS build artifcats
-        uses: actions/upload-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: js-build-artifacts
           path: app/web      
