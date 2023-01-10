@@ -67,6 +67,7 @@ jobs:
           ls -l ../app/web
       
       - name: store JS build artifcats
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
         uses: actions/upload-artifact@v2
         with:
           name: js-build-artifacts
