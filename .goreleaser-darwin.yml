@@ -13,8 +13,8 @@ builds:
 checksum:
   name_template: "{{ .ProjectName }}_darwin_checksums.txt"
   
-signs:
-  - artifacts: checksum
+#signs:
+  #- artifacts: checksum
     #stdin: '{{ .Env.GPG_PASSWORD }}'  
     #id: darwin_sign
 archives:
