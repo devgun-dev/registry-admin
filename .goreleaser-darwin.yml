@@ -1,6 +1,7 @@
 builds:
   - env:
       - CGO_ENABLED=1
+    id: darwin_build  
     goos:
       - darwin
     goarch:
@@ -17,6 +18,7 @@ signs:
   - stdin: '{{ .Env.GPG_PASSWORD }}'  
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
+    id: darwin_build  
     rlcp: true
     files:
       - LICENSE.md
