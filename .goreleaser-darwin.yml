@@ -16,6 +16,7 @@ checksum:
 signs:
   - artifacts: checksum
   - stdin: '{{ .Env.GPG_PASSWORD }}'  
+  - id: darwin_sign
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
     id: darwin_build  
