@@ -39,8 +39,8 @@ builds:
 checksum:
   name_template: "{{ .ProjectName }}_linux_windows_checksums.txt"
   
-signs:
-  - artifacts: checksum
+#signs:
+  #- artifacts: checksum
     #stdin: '{{ .Env.GPG_PASSWORD }}'
     #id: linux_windows_sign
             
