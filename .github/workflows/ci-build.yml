@@ -100,7 +100,8 @@ jobs:
           args: release --rm-dist --config .goreleaser.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}  
+          
   release-darwin-binary:
     needs: release-linux-windows-binary
     if: ${{ startsWith(github.ref, 'refs/tags/') }}
@@ -130,3 +131,4 @@ jobs:
           args: release --rm-dist --config .goreleaser-darwin.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}  
