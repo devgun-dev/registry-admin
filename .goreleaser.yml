@@ -1,6 +1,7 @@
 builds:
   - env:
       - CGO_ENABLED=1
+    id: linux_windows  
     goos:
       - linux
       - windows
@@ -44,6 +45,7 @@ signs:
             
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
+    id: linux_windows
     rlcp: true
     format_overrides:
       - goos: windows
