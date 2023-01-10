@@ -8,7 +8,13 @@ builds:
       - arm64
     dir: app
     ldflags: "-s -w -X main.version={{.Tag}}-{{.ShortCommit}}-{{.CommitDate}}"
-   
+    
+checksum:
+  name_template: "{{ .ProjectName }}_darwin_checksums.txt"
+  
+signs:
+  - artifacts: checksum
+  
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
     rlcp: true
