@@ -34,6 +34,13 @@ builds:
         goarch: amd64
         env:
           - CC=gcc
+
+checksum:
+  name_template: "{{ .ProjectName }}_linux_windows_checksums.txt"
+  
+signs:
+  - artifacts: checksum
+            
 archives:
   - name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
     rlcp: true
